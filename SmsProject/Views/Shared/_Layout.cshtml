@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Online SMS Site</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-dark-900">
+    <header>
+        <nav class="navbar glass-card">
+            <div class="nav-logo">
+                <i data-lucide="message-square"></i>
+                <a asp-area="" asp-controller="Home" asp-action="Index">Online SMS</a>
+            </div>
+            <ul class="nav-links">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Account" asp-action="Profile">Profile</a></li>
+                <li><a asp-controller="Sms" asp-action="Index">Messages</a></li>
+                <li><a asp-controller="Social" asp-action="Friends">Friends</a></li>
+                <li><a asp-controller="Social" asp-action="Contacts">Contacts</a></li>
+                <li><a asp-controller="Service" asp-action="Index">Services</a></li>
+            </ul>
+            <div id="auth-actions">
+                @if (Context.Session.GetInt32("UserId") != null)
+                {
+                    <a class="btn-secondary" asp-controller="Account" asp-action="Logout">Logout</a>
+                }
+                else
+                {
+                    <a class="btn-secondary" asp-controller="Account" asp-action="Login">Login</a>
+                }
+            </div>
+        </nav>
+    </header>
+    <div class="container pb-5">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>lucide.createIcons();</script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
