@@ -15,7 +15,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-# Expose port (Render sets PORT env, but we'll expose 80 by default)
-EXPOSE 80
+# Render sets the PORT environment variable. We should not hardcode it.
+# ASP.NET Core will automatically pick up the PORT env var if we set it as below.
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
 
 ENTRYPOINT ["dotnet", "SmsProject.dll"]
