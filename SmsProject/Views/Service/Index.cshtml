@@ -1,76 +1,105 @@
+@model SmsProject.Models.ApplicationUser
 @{
-    ViewData["Title"] = "Services";
+    ViewData["Title"] = "Premium Services";
 }
 
-<div class="container">
-    <div class="card glass-card text-center mb-5">
-        <h2>Activate Premium Services</h2>
-        <p class="text-muted">Enhance your messaging experience with our premium packages.</p>
+<div style="text-align: center; margin-bottom: 60px;">
+    <h1 class="text-gradient" style="font-size: 2.8rem; font-weight: 700; margin-bottom: 16px;">Elevate Your Experience</h1>
+    <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Upgrade to premium and unlock unlimited messaging, global delivery, and priority support.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; justify-content: center; max-width: 1000px; margin: 0 auto;">
+    
+    <!-- Free Plan -->
+    <div class="glass-card" style="display: flex; flex-direction: column; opacity: 0.8;">
+        <div style="margin-bottom: 30px;">
+            <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Current Plan</span>
+            <h2 style="font-size: 2rem; margin-top: 10px;">Free Tier</h2>
+        </div>
+        <div style="flex-grow: 1;">
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px;">
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
+                    <i data-lucide="check-circle" style="color: #10b981; width: 18px;"></i> 5 Messages / Month (Non-friends)
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
+                    <i data-lucide="check-circle" style="color: #10b981; width: 18px;"></i> Unlimited Friend Messages
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--text-muted);">
+                    <i data-lucide="x-circle" style="width: 18px;"></i> Priority Delivery
+                </li>
+            </ul>
+        </div>
+        @if (Model.IsPremium) {
+            <div style="margin-top: 40px; text-align: center; color: var(--text-muted);">Downgrade not available</div>
+        } else {
+            <button class="btn-primary" style="margin-top: 40px; background: rgba(255,255,255,0.05); color: var(--text-muted); box-shadow: none; cursor: default;">Active</button>
+        }
     </div>
 
-    <div class="dashboard-grid">
-        <!-- Package 1 -->
-        <div class="card glass-card">
-            <h3 class="text-primary">Starter Pack</h3>
-            <p class="display-6 mt-3">$4.99</p>
-            <ul class="mt-4 mb-4 text-muted" style="list-style: none;">
-                <li><i data-lucide="check" class="text-success"></i> 500 SMS / Month</li>
-                <li><i data-lucide="check" class="text-success"></i> Priority Support</li>
-                <li><i data-lucide="check" class="text-success"></i> 10 Contacts Profile</li>
+    <!-- Premium Plan -->
+    <div class="glass-card" style="border: 2px solid var(--primary); transform: scale(1.05); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 12px; right: -30px; background: var(--secondary); padding: 4px 40px; transform: rotate(45deg); font-size: 0.75rem; font-weight: 700; box-shadow: 0 5px 10px rgba(0,0,0,0.3);">POPULAR</div>
+        
+        <div style="margin-bottom: 30px;">
+            <span class="badge badge-premium">PREMIUM</span>
+            <h2 style="font-size: 2rem; margin-top: 10px;">Unlimited <span style="font-size: 1rem; color: var(--text-muted);">/ $9.99</span></h2>
+        </div>
+        
+        <div style="flex-grow: 1;">
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px;">
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
+                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> Unlimited Global Messages
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
+                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> No Friend Restrictions
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
+                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> Instant Priority Delivery
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
+                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> 24/7 Priority Support
+                </li>
             </ul>
-            <button class="btn-primary w-100" onclick="openPayment('Starter Pack')">Activate Now</button>
         </div>
 
-        <!-- Package 2 -->
-        <div class="card glass-card" style="border: 1px solid var(--primary);">
-            <div style="position: absolute; top: -10px; right: 20px; background: var(--primary); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem;">POPULAR</div>
-            <h3 class="text-primary">Pro Pack</h3>
-            <p class="display-6 mt-3">$9.99</p>
-            <ul class="mt-4 mb-4 text-muted" style="list-style: none;">
-                <li><i data-lucide="check" class="text-success"></i> Unlimited SMS</li>
-                <li><i data-lucide="check" class="text-success"></i> Global Reach</li>
-                <li><i data-lucide="check" class="text-success"></i> Unlimited Contacts</li>
-            </ul>
-            <button class="btn-primary w-100" onclick="openPayment('Pro Pack')">Activate Now</button>
-        </div>
-    </div>
-
-    <!-- Hidden Payment Modal -->
-    <div id="paymentModal" class="glass-card" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 2rem; width: 400px; border: 1px solid var(--primary);">
-        <h3 id="selectedService">Activate Service</h3>
-        <form asp-action="Activate" method="post" class="mt-4">
-            <input type="hidden" id="serviceName" name="serviceName" />
-            <div class="form-group">
-                <label>Card Number</label>
-                <input name="cardNumber" class="form-control" placeholder="XXXX XXXX XXXX XXXX" required />
+        @if (Model.IsPremium)
+        {
+            <div style="margin-top: 40px; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; padding: 12px; border-radius: 12px; text-align: center; color: #10b981; font-weight: 600;">
+                <i data-lucide="check" style="width: 18px; vertical-align: middle;"></i> Subscription Active
             </div>
-            <div style="display: flex; gap: 1rem;">
-                <div class="form-group" style="flex: 1;">
-                    <label>Expiry (MM/YY)</label>
-                    <input name="expiry" class="form-control" placeholder="12/26" required />
-                </div>
-                <div class="form-group" style="flex: 0.5;">
-                    <label>CVV</label>
-                    <input name="cvv" class="form-control" placeholder="123" required />
-                </div>
-            </div>
-            <div class="mt-4" style="display: flex; gap: 1rem;">
-                <button type="submit" class="btn-primary" style="flex: 1;">Pay & Activate</button>
-                <button type="button" class="btn-secondary" onclick="closePayment()" style="flex: 1;">Cancel</button>
-            </div>
-        </form>
+        }
+        else
+        {
+            <button onclick="document.getElementById('payModal').style.display='flex'" class="btn-primary" style="margin-top: 40px; width: 100%; justify-content: center;">Upgrade Now</button>
+        }
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        function openPayment(name) {
-            document.getElementById('serviceName').value = name;
-            document.getElementById('selectedService').innerText = 'Activate ' + name;
-            document.getElementById('paymentModal').style.display = 'block';
-        }
-        function closePayment() {
-            document.getElementById('paymentModal').style.display = 'none';
-        }
-    </script>
-}
+<!-- Simple Payment Modal -->
+<div id="payModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="glass-card" style="width: 100%; max-width: 440px; padding: 40px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <i data-lucide="credit-card" style="width: 48px; height: 48px; color: var(--primary); margin-bottom: 16px;"></i>
+            <h3>Secure Checkout</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Upgrade to Premium for $9.99/month</p>
+        </div>
+        <form asp-action="ActivatePremium" method="post">
+            <div class="form-group">
+                <label class="form-label">Card Number</label>
+                <input class="form-input" placeholder="XXXX XXXX XXXX XXXX" required />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label class="form-label">Expiry</label>
+                    <input class="form-input" placeholder="MM/YY" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">CVC</label>
+                    <input class="form-input" placeholder="XXX" required />
+                </div>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;">Confirm & Pay</button>
+            <button type="button" onclick="document.getElementById('payModal').style.display='none'" class="btn-primary" style="width: 100%; margin-top: 10px; background: transparent; box-shadow: none; color: var(--text-muted);">Cancel</button>
+        </form>
+    </div>
+</div>

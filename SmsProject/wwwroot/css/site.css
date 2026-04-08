@@ -1,120 +1,229 @@
-/* Modern CSS for SMS Project */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
 :root {
     --primary: #6366f1;
     --primary-hover: #4f46e5;
+    --secondary: #ec4899;
+    --accent: #8b5cf6;
     --bg-dark: #0f172a;
-    --card-bg: rgba(30, 41, 59, 0.7);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --nav-height: 72px;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
 }
 
 body {
-    background: var(--bg-dark);
+    background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #020617);
     color: var(--text-main);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.container {
+/* Background Animated Blobs */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    filter: blur(100px);
+    z-index: -1;
+    opacity: 0.15;
+    border-radius: 50%;
+}
+
+body::before {
+    background: var(--primary);
+    top: 10%;
+    right: 15%;
+    animation: moveCircle 20s infinite alternate;
+}
+
+body::after {
+    background: var(--secondary);
+    bottom: 10%;
+    left: 15%;
+    animation: moveCircle 25s infinite alternate-reverse;
+}
+
+@keyframes moveCircle {
+    from { transform: translate(0, 0); }
+    to { transform: translate(100px, 100px); }
+}
+
+/* Layout */
+.app-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 24px;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    margin-bottom: 2rem;
-}
-
+/* Glass Card */
 .glass-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
-    border-radius: 1rem;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Navigation */
+nav {
+    height: var(--nav-height);
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(to right, #fff, var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .nav-links {
     display: flex;
-    list-style: none;
-    gap: 1.5rem;
+    gap: 32px;
 }
 
 .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+    font-size: 0.95rem;
 }
 
 .nav-links a:hover {
-    color: var(--primary);
+    color: var(--text-main);
+    transform: translateY(-2px);
 }
 
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s ease;
+/* Form Styles */
+.form-group {
+    margin-bottom: 24px;
 }
 
-.btn-primary:hover {
-    background: var(--primary-hover);
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
-.btn-secondary {
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    text-decoration: none;
+.form-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #fff;
+    outline: none;
     transition: all 0.3s ease;
 }
 
-.btn-secondary:hover {
-    background: var(--primary);
-    color: white;
+.form-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-.form-group {
-    margin-bottom: 1.5rem;
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border: none;
+    border-radius: 12px;
+    padding: 14px 28px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
 }
 
-.form-control {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid var(--glass-border);
-    color: white;
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4);
+    filter: brightness(1.1);
 }
 
-.card {
-    padding: 2rem;
-    margin-bottom: 1rem;
-}
-
-.dashboard-grid {
+/* Messaging Layout */
+.sms-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: 350px 1fr;
+    gap: 32px;
+    margin-top: 40px;
 }
 
-.stat-card {
-    text-align: center;
-    padding: 1.5rem;
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 16px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.contact-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--glass-border);
+}
+
+/* Utilities */
+.text-gradient {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-premium {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
 }

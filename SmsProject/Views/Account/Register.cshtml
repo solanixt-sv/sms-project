@@ -1,52 +1,59 @@
-@model SmsProject.Models.ApplicationUser
 @{
     ViewData["Title"] = "Register";
 }
 
-<div class="container" style="max-width: 600px;">
-    <div class="card glass-card">
-        <h2 class="mb-4">Create Account</h2>
+<div style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 40px 0;">
+    <div class="glass-card" style="width: 100%; max-width: 500px;">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <div style="display: inline-flex; background: rgba(236, 72, 153, 0.1); padding: 16px; border-radius: 20px; margin-bottom: 20px;">
+                <i data-lucide="user-plus" style="color: var(--secondary); width: 32px; height: 32px;"></i>
+            </div>
+            <h2 style="font-size: 1.75rem; font-weight: 700;">Join Online SMS</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Experience secure and global messaging</p>
+        </div>
+
         <form asp-action="Register" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="Username" class="form-label"></label>
-                <input asp-for="Username" class="form-control" placeholder="Choose a username" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" placeholder="email@example.com" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="MobileNumber" class="form-label">Mobile Number</label>
-                <input asp-for="MobileNumber" class="form-control" placeholder="10-digit mobile number" />
-                <span asp-validation-for="MobileNumber" class="text-danger"></span>
-            </div>
-
-            <div class="row" style="display: flex; gap: 1rem;">
-                <div class="form-group" style="flex: 1;">
-                    <label asp-for="Password" class="form-label"></label>
-                    <input asp-for="Password" type="password" class="form-control" />
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input name="Username" class="form-input" placeholder="Desired username" required />
                 </div>
-                <div class="form-group" style="flex: 1;">
-                    <label class="form-label">Confirm Password</label>
-                    <input name="confirmPassword" type="password" class="form-control" />
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input name="Email" type="email" class="form-input" placeholder="mail@example.com" required />
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Verification Code (Enter 1234)</label>
-                <div style="display: flex; gap: 1rem;">
-                    <input name="verificationCode" class="form-control" placeholder="Enter code" />
-                    <input name="actualCode" type="hidden" value="1234" />
+                <label class="form-label">Mobile Number</label>
+                <input name="Mobile" class="form-input" placeholder="e.g. 03001234567" required />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input name="Password" type="password" class="form-input" placeholder="••••••••" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm</label>
+                    <input name="ConfirmPassword" type="password" class="form-input" placeholder="••••••••" required />
                 </div>
             </div>
 
-            <button type="submit" class="btn-primary w-100 mt-3">Register Now</button>
+            <div class="form-group">
+                <label class="form-label">Verification Code (Demo: 1234)</label>
+                <input name="VerificationCode" class="form-input" placeholder="Enter code" required />
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
+                Create Account <i data-lucide="rocket" style="width: 18px;"></i>
+            </button>
         </form>
+
+        <div style="text-align: center; margin-top: 32px; border-top: 1px solid var(--glass-border); padding-top: 24px;">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Already have an account? 
+                <a asp-action="Login" style="color: var(--primary); text-decoration: none; font-weight: 600;">Sign in here</a>
+            </p>
+        </div>
     </div>
 </div>

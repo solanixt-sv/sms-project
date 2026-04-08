@@ -1,97 +1,129 @@
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = "Secure Messaging";
 }
 
-<div class="container">
-    <div class="dashboard-grid" style="grid-template-columns: 1fr 2fr;">
-        <!-- Sidebar: Friends/Contacts -->
-        <div class="card glass-card">
-            <h3>Quick Select</h3>
-            <hr class="mb-3" style="border-color: var(--glass-border);">
-            
-            <h5>Friends</h5>
-            <ul class="nav flex-column mb-4" style="list-style: none;">
-                @foreach (var friend in ViewBag.Friends as List<SmsProject.Data.Friendship>)
-                {
-                    <li class="mb-2">
-                        <button class="btn-link text-muted" onclick="setReceiver('@friend.Id')">Friend #@friend.Id</button>
-                    </li>
-                }
-            </ul>
+<div class="messaging-container" style="display: grid; grid-template-columns: 320px 1fr; gap: 30px; min-height: 700px;">
+    <!-- Sidebar: Quick Actions -->
+    <div class="glass-card" style="padding: 24px;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 24px; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="quick-select" style="width: 20px;"></i> Quick Select
+        </h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div onclick="location.href='@Url.Action("Friends", "Social")'" class="contact-item">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: rgba(99, 102, 241, 0.2); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="users" style="color: var(--primary); width: 20px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.9rem; font-weight: 600;">My Friends</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Trusted contacts</div>
+                    </div>
+                </div>
+            </div>
 
-            <h5>Contacts</h5>
-            <ul class="nav flex-column" style="list-style: none;">
-                @foreach (var contact in ViewBag.Contacts as List<SmsProject.Models.Contact>)
-                {
-                    <li class="mb-2">
-                        <button class="btn-link text-muted" onclick="setReceiver('@contact.MobileNumber')">@contact.FirstName (@contact.MobileNumber)</button>
-                    </li>
-                }
-            </ul>
+            <div onclick="location.href='@Url.Action("Contacts", "Social")'" class="contact-item">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="background: rgba(236, 72, 153, 0.2); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="book" style="color: var(--secondary); width: 20px;"></i>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.9rem; font-weight: 600;">Address Book</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Saved mobile numbers</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Main: Message Form -->
-        <div class="card glass-card">
-            <h3>Compose Message</h3>
-            <hr class="mb-4" style="border-color: var(--glass-border);">
-
-            <div id="alert-box" style="display: none;" class="alert"></div>
-
-            <form id="smsForm">
-                <div class="form-group">
-                    <label>Receiver Mobile Number</label>
-                    <input id="receiverMobile" name="receiverMobile" class="form-control" placeholder="10-digit number" required />
-                </div>
-
-                <div class="form-group">
-                    <label>Message (Max 120 chars)</label>
-                    <textarea id="messageBody" name="messageBody" class="form-control" rows="4" maxlength="120" required></textarea>
-                    <small id="charCount" class="text-muted">120 characters remaining</small>
-                </div>
-
-                <div class="mt-4">
-                    <button type="button" onclick="sendMessage()" class="btn-primary">Send Secure SMS</button>
-                </div>
-            </form>
+        <div style="margin-top: 40px; padding: 20px; background: rgba(255, 255, 255, 0.02); border-radius: 16px; border: 1px dashed var(--glass-border);">
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                <i data-lucide="info" style="width: 14px; vertical-align: middle; margin-right: 4px;"></i>
+                Non-friends are restricted to 5 messages per month. Add friends for unlimited messaging.
+            </p>
         </div>
+    </div>
+
+    <!-- Main: Composer -->
+    <div class="glass-card" style="padding: 40px;">
+        <div style="margin-bottom: 32px; border-bottom: 1px solid var(--glass-border); padding-bottom: 24px;">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">Compose Secure SMS</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Messages are encrypted and delivered instantly.</p>
+        </div>
+
+        <form id="smsForm">
+            <div class="form-group">
+                <label class="form-label">Receiver Mobile Number</label>
+                <div style="position: relative;">
+                    <i data-lucide="smartphone" style="position: absolute; left: 16px; top: 12px; width: 18px; color: var(--text-muted);"></i>
+                    <input type="text" id="receiverMobile" class="form-input" placeholder="e.g. 03001234567" style="padding-left: 48px;" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Message Content</label>
+                <textarea id="messageBody" class="form-input" rows="6" placeholder="Type your message here..." maxlength="120" style="resize: none;"></textarea>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                    <span id="charCount" style="font-size: 0.8rem; color: var(--primary); font-weight: 500;">120 characters remaining</span>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Max: 120 chars</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <button type="button" onclick="sendSms()" class="btn-primary" style="padding: 16px 40px;">
+                    Send Secure SMS <i data-lucide="send" style="width: 18px;"></i>
+                </button>
+            </div>
+            <div id="statusMessage" style="margin-top: 20px; font-weight: 500;"></div>
+        </form>
     </div>
 </div>
 
 @section Scripts {
     <script>
-        function setReceiver(mobile) {
-            document.getElementById('receiverMobile').value = mobile;
-        }
+        const messageBody = document.getElementById('messageBody');
+        const charCount = document.getElementById('charCount');
 
-        document.getElementById('messageBody').addEventListener('input', function() {
-            var remaining = 120 - this.value.length;
-            document.getElementById('charCount').innerText = remaining + ' characters remaining';
+        messageBody.addEventListener('input', () => {
+            const remaining = 120 - messageBody.value.length;
+            charCount.textContent = `${remaining} characters remaining`;
+            if (remaining < 20) charCount.style.color = 'var(--secondary)';
+            else charCount.style.color = 'var(--primary)';
         });
 
-        async function sendMessage() {
-            var mobile = document.getElementById('receiverMobile').value;
-            var body = document.getElementById('messageBody').value;
-            var alertBox = document.getElementById('alert-box');
+        async function sendSms() {
+            const mobile = document.getElementById('receiverMobile').value;
+            const body = document.getElementById('messageBody').value;
+            const status = document.getElementById('statusMessage');
 
-            if (!mobile || !body) return;
+            if (!mobile || !body) {
+                status.style.color = 'var(--secondary)';
+                status.innerText = "Please fill all fields.";
+                return;
+            }
+
+            status.style.color = 'var(--text-muted)';
+            status.innerText = "Sending...";
 
             try {
                 const response = await fetch('/Sms/SendMessage', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `receiverMobile=${mobile}&messageBody=${body}`
+                    body: `receiverMobile=${encodeURIComponent(mobile)}&body=${encodeURIComponent(body)}`
                 });
+
                 const result = await response.json();
-
-                alertBox.innerText = result.message;
-                alertBox.className = result.success ? 'alert text-success' : 'alert text-danger';
-                alertBox.style.display = 'block';
-
                 if (result.success) {
-                    document.getElementById('messageBody').value = '';
+                    status.style.color = '#10b981';
+                    status.innerText = "✓ Message sent successfully!";
+                    document.getElementById('smsForm').reset();
+                    charCount.textContent = "120 characters remaining";
+                } else {
+                    status.style.color = 'var(--secondary)';
+                    status.innerText = "✕ " + result.message;
                 }
-            } catch (error) {
-                console.error('Error:', error);
+            } catch (err) {
+                status.style.color = 'var(--secondary)';
+                status.innerText = "✕ Connection error. Please try again.";
             }
         }
     </script>

@@ -1,60 +1,80 @@
 @model List<SmsProject.Models.Contact>
 @{
-    ViewData["Title"] = "Contacts";
+    ViewData["Title"] = "Address Book";
 }
 
-<div class="container">
-    <div class="dashboard-grid" style="grid-template-columns: 1fr 2fr;">
-        <!-- Add Contact Form -->
-        <div class="card glass-card">
-            <h3>Add New Contact</h3>
-            <form asp-action="AddContact" method="post" class="mt-4">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input name="FirstName" class="form-control" required />
-                </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input name="LastName" class="form-control" required />
-                </div>
-                <div class="form-group">
-                    <label>Mobile Number</label>
-                    <input name="MobileNumber" class="form-control" required maxlength="10" />
-                </div>
-                <button type="submit" class="btn-primary w-100">Save Contact</button>
-            </form>
-        </div>
+<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
+    <div>
+        <h1 class="text-gradient" style="font-size: 2.2rem; font-weight: 700; margin-bottom: 8px;">Address Book</h1>
+        <p style="color: var(--text-muted);">Manage your personal contacts and mobile numbers</p>
+    </div>
+    <button onclick="document.getElementById('addModal').style.display='flex'" class="btn-primary">
+        <i data-lucide="plus"></i> Add New Contact
+    </button>
+</div>
 
-        <!-- Contact List -->
-        <div class="card glass-card">
-            <h3>Address Book</h3>
-            <div class="mt-4">
-                <table class="table" style="width: 100%; color: white; border-collapse: collapse;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid var(--glass-border); text-align: left;">
-                            <th style="padding: 1rem;">Name</th>
-                            <th style="padding: 1rem;">Mobile</th>
-                            <th style="padding: 1rem;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var contact in Model)
-                        {
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                <td style="padding: 1rem;">@contact.FirstName @contact.LastName</td>
-                                <td style="padding: 1rem;">@contact.MobileNumber</td>
-                                <td style="padding: 1rem;">
-                                    <a asp-controller="Sms" asp-action="Index" class="text-primary" style="text-decoration: none;">Message</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                @if (!Model.Any())
-                {
-                    <p class="text-center text-muted mt-4">No contacts found.</p>
-                }
-            </div>
+<div class="glass-card">
+    @if (Model.Count == 0)
+    {
+        <div style="text-align: center; padding: 100px 0;">
+            <i data-lucide="book-x" style="width: 64px; height: 64px; color: var(--glass-border); margin-bottom: 24px;"></i>
+            <h3 style="color: var(--text-main); margin-bottom: 12px;">Your Address Book is Empty</h3>
+            <p style="color: var(--text-muted);">Start adding contacts to quickly send them secure messages.</p>
         </div>
+    }
+    else
+    {
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+            @foreach (var contact in Model)
+            {
+                <div style="background: rgba(255, 255, 255, 0.02); padding: 24px; border-radius: 20px; border: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div style="width: 50px; height: 50px; border-radius: 16px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="user" style="color: var(--accent); width: 24px;"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 1.1rem; font-weight: 600;">@contact.Name</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Added: @contact.CreatedAt.ToString("MMM dd, yyyy")</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.03); padding: 12px 16px; border-radius: 12px; display: flex; align-items: center; gap: 12px;">
+                        <i data-lucide="smartphone" style="width: 16px; color: var(--primary);"></i>
+                        <span style="font-family: monospace; font-size: 1rem; letter-spacing: 1px;">@contact.MobileNumber</span>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <a href="/Sms/Index?to=@contact.MobileNumber" class="btn-primary" style="flex: 1; justify-content: center; font-size: 0.85rem; padding: 10px;">Message</a>
+                        <form asp-action="RemoveContact" asp-controller="Social" method="post" style="flex: 0 0 50px;">
+                            <input type="hidden" name="contactId" value="@contact.Id" />
+                            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 10px; background: rgba(236, 72, 153, 0.1); color: var(--secondary); box-shadow: none;">
+                                <i data-lucide="trash-2" style="width: 18px;"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<!-- Add Contact Modal (Simple Overlay) -->
+<div id="addModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="glass-card" style="width: 100%; max-width: 400px; padding: 40px;">
+        <h3 style="margin-bottom: 24px;">Add New Contact</h3>
+        <form asp-action="AddContact" asp-controller="Social" method="post">
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input name="name" class="form-input" placeholder="e.g. John Smith" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Mobile Number</label>
+                <input name="mobile" class="form-input" placeholder="e.g. 03001234567" required />
+            </div>
+            <div style="display: flex; gap: 15px; margin-top: 20px;">
+                <button type="submit" class="btn-primary" style="flex: 1; justify-content: center;">Save Contact</button>
+                <button type="button" onclick="document.getElementById('addModal').style.display='none'" class="btn-primary" style="background: rgba(255,255,255,0.05); color: var(--text-muted); box-shadow: none;">Cancel</button>
+            </div>
+        </form>
     </div>
 </div>

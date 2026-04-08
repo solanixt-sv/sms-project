@@ -1,46 +1,38 @@
+@model SmsProject.Models.ApplicationUser
 @{
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="container text-center">
-    <div class="card glass-card mb-5">
-        <h1 class="display-4">Welcome to Online SMS</h1>
-        <p class="lead">Connect, Share, and Message effortlessly.</p>
+<div class="dashboard-header" style="margin-bottom: 50px;">
+    <h1 class="text-gradient" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 10px;">Welcome back, @Model.Username!</h1>
+    <p style="color: var(--text-muted); font-size: 1.1rem;">Manage your social circle and send secure messages with ease.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+    <div class="glass-card">
+        <div style="background: rgba(99, 102, 241, 0.1); width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+            <i data-lucide="send" style="color: var(--primary); width: 30px; height: 30px;"></i>
+        </div>
+        <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Send SMS</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;">Compose and send secure messages to your global contacts instantly.</p>
+        <a asp-controller="Sms" asp-action="Index" class="btn-primary" style="width: 100%; justify-content: center;">Open Messages</a>
     </div>
 
-    @if (Context.Session.GetInt32("UserId") != null)
-    {
-        <div class="dashboard-grid">
-            <div class="card glass-card stat-card">
-                <i data-lucide="send" style="width: 48px; height: 48px; color: var(--primary);"></i>
-                <h3 class="mt-3">Quick Message</h3>
-                <p class="text-muted">Send SMS to your friends or contacts instantly.</p>
-                <a asp-controller="Sms" asp-action="Index" class="btn-primary mt-3 d-inline-block">Go to Inbox</a>
-            </div>
-
-            <div class="card glass-card stat-card">
-                <i data-lucide="users" style="width: 48px; height: 48px; color: #10b981;"></i>
-                <h3 class="mt-3">Social Circle</h3>
-                <p class="text-muted">Manage your friends and connections.</p>
-                <a asp-controller="Social" asp-action="Friends" class="btn-primary mt-3 d-inline-block">View Friends</a>
-            </div>
-
-            <div class="card glass-card stat-card">
-                <i data-lucide="package" style="width: 48px; height: 48px; color: #f59e0b;"></i>
-                <h3 class="mt-3">Service Packages</h3>
-                <p class="text-muted">Activate new services and messaging plans.</p>
-                <a asp-controller="Service" asp-action="Index" class="btn-primary mt-3 d-inline-block">Explore Services</a>
-            </div>
+    <div class="glass-card">
+        <div style="background: rgba(236, 72, 153, 0.1); width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+            <i data-lucide="users" style="color: var(--secondary); width: 30px; height: 30px;"></i>
         </div>
-    }
-    else
-    {
-        <div class="card glass-card p-5">
-            <h3>Join the network today</h3>
-            <div class="mt-4" style="display: flex; gap: 1rem; justify-content: center;">
-                <a asp-controller="Account" asp-action="Login" class="btn-primary">Sign In</a>
-                <a asp-controller="Account" asp-action="Register" class="btn-secondary">Create Account</a>
-            </div>
+        <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Social Circle</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;">Manage your friends, pending requests, and expand your network.</p>
+        <a asp-controller="Social" asp-action="Friends" class="btn-primary" style="width: 100%; justify-content: center;">Friends List</a>
+    </div>
+
+    <div class="glass-card">
+        <div style="background: rgba(139, 92, 246, 0.1); width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+            <i data-lucide="settings" style="color: var(--accent); width: 30px; height: 30px;"></i>
         </div>
-    }
+        <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Account</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;">Update your personal and professional profile details anytime.</p>
+        <a asp-controller="Account" asp-action="Profile" class="btn-primary" style="width: 100%; justify-content: center;">Quick Profile</a>
+    </div>
 </div>

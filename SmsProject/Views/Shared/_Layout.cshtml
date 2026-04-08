@@ -7,41 +7,42 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-dark-900">
-    <header>
-        <nav class="navbar glass-card">
-            <div class="nav-logo">
-                <i data-lucide="message-square"></i>
-                <a asp-area="" asp-controller="Home" asp-action="Index">Online SMS</a>
-            </div>
-            <ul class="nav-links">
-                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-controller="Account" asp-action="Profile">Profile</a></li>
-                <li><a asp-controller="Sms" asp-action="Index">Messages</a></li>
-                <li><a asp-controller="Social" asp-action="Friends">Friends</a></li>
-                <li><a asp-controller="Social" asp-action="Contacts">Contacts</a></li>
-                <li><a asp-controller="Service" asp-action="Index">Services</a></li>
-            </ul>
-            <div id="auth-actions">
-                @if (Context.Session.GetInt32("UserId") != null)
-                {
-                    <a class="btn-secondary" asp-controller="Account" asp-action="Logout">Logout</a>
-                }
-                else
-                {
-                    <a class="btn-secondary" asp-controller="Account" asp-action="Login">Login</a>
-                }
-            </div>
-        </nav>
-    </header>
-    <div class="container pb-5">
-        <main role="main" class="pb-3">
+<body>
+    <nav>
+        <a class="nav-brand" asp-controller="Home" asp-action="Index">
+            <i data-lucide="message-square-quote"></i>
+            <span>Online SMS</span>
+        </a>
+        <div class="nav-links">
+            <a asp-controller="Home" asp-action="Index">Dashboard</a>
+            <a asp-controller="Account" asp-action="Profile">Profile</a>
+            <a asp-controller="Sms" asp-action="Index">Messages</a>
+            <a asp-controller="Social" asp-action="Friends">Friends</a>
+            <a asp-controller="Social" asp-action="Contacts">Contacts</a>
+            <a asp-controller="Service" asp-action="Index">Services</a>
+        </div>
+        <div class="auth-box">
+            @if (Context.Session.GetInt32("UserId") != null)
+            {
+                <a asp-controller="Account" asp-action="Logout" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Logout</a>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Login</a>
+            }
+        </div>
+    </nav>
+
+    <div class="app-container" style="padding-top: 50px; padding-bottom: 80px;">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>lucide.createIcons();</script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
