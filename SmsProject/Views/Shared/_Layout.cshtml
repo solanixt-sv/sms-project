@@ -3,43 +3,50 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Online SMS Site</title>
+    <meta name="description" content="Online SMS - Send secure messages globally with ease." />
+    <title>@ViewData["Title"] - Online SMS</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
     <nav>
         <a class="nav-brand" asp-controller="Home" asp-action="Index">
-            <i data-lucide="message-square-quote"></i>
-            <span>Online SMS</span>
+            <div class="nav-brand-icon">
+                <i data-lucide="zap" style="width:18px;height:18px;color:#fff;"></i>
+            </div>
+            <span class="nav-brand-text">OnlineSMS</span>
         </a>
+
         <div class="nav-links">
             <a asp-controller="Home" asp-action="Index">Dashboard</a>
-            <a asp-controller="Account" asp-action="Profile">Profile</a>
             <a asp-controller="Sms" asp-action="Index">Messages</a>
             <a asp-controller="Social" asp-action="Friends">Friends</a>
             <a asp-controller="Social" asp-action="Contacts">Contacts</a>
             <a asp-controller="Service" asp-action="Index">Services</a>
         </div>
-        <div class="auth-box">
+
+        <div class="nav-actions">
             @if (Context.Session.GetInt32("UserId") != null)
             {
-                <a asp-controller="Account" asp-action="Logout" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Logout</a>
+                <a asp-controller="Account" asp-action="Profile" class="btn btn-ghost btn-sm">
+                    <i data-lucide="user" style="width:15px;"></i> Profile
+                </a>
+                <a asp-controller="Account" asp-action="Logout" class="btn btn-primary btn-sm">Logout</a>
             }
             else
             {
-                <a asp-controller="Account" asp-action="Login" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Login</a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-ghost btn-sm">Sign In</a>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-sm">Get Started</a>
             }
         </div>
     </nav>
 
-    <div class="app-container" style="padding-top: 50px; padding-bottom: 80px;">
+    <div class="app-container">
         <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         lucide.createIcons();
     </script>

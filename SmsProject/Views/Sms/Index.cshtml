@@ -2,78 +2,90 @@
     ViewData["Title"] = "Secure Messaging";
 }
 
-<div class="messaging-container" style="display: grid; grid-template-columns: 320px 1fr; gap: 30px; min-height: 700px;">
-    <!-- Sidebar: Quick Actions -->
-    <div class="glass-card" style="padding: 24px;">
-        <h3 style="font-size: 1.1rem; margin-bottom: 24px; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
-            <i data-lucide="quick-select" style="width: 20px;"></i> Quick Select
-        </h3>
-        
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div onclick="location.href='@Url.Action("Friends", "Social")'" class="contact-item">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <div style="background: rgba(99, 102, 241, 0.2); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="users" style="color: var(--primary); width: 20px;"></i>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.9rem; font-weight: 600;">My Friends</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">Trusted contacts</div>
-                    </div>
-                </div>
-            </div>
+<div class="page-header text-center">
+    <h1 class="page-title">Command Center</h1>
+    <p class="page-subtitle">Send encrypted messages directly to your contacts.</p>
+</div>
 
-            <div onclick="location.href='@Url.Action("Contacts", "Social")'" class="contact-item">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <div style="background: rgba(236, 72, 153, 0.2); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="book" style="color: var(--secondary); width: 20px;"></i>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.9rem; font-weight: 600;">Address Book</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">Saved mobile numbers</div>
-                    </div>
+<div style="display: grid; grid-template-columns: 340px 1fr; gap: 40px; align-items: start;">
+    
+    <!-- Sidebar -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+        <div class="card" style="padding: 24px;">
+            <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 20px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">Quick Actions</h3>
+            
+            <a href="@Url.Action("Friends", "Social")" class="contact-item" style="text-decoration: none; display: flex;">
+                <div class="icon-box icon-box-indigo" style="width: 40px; height: 40px;"><i data-lucide="users" style="width:18px;"></i></div>
+                <div>
+                    <div style="font-weight: 600; color: var(--text); font-size: 0.95rem;">Trust Network</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Manage friends</div>
                 </div>
-            </div>
+            </a>
+            
+            <div class="divider" style="margin: 12px 0;"></div>
+
+            <a href="@Url.Action("Contacts", "Social")" class="contact-item" style="text-decoration: none; display: flex;">
+                <div class="icon-box icon-box-pink" style="width: 40px; height: 40px;"><i data-lucide="book-user" style="width:18px;"></i></div>
+                <div>
+                    <div style="font-weight: 600; color: var(--text); font-size: 0.95rem;">Address Book</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Saved numbers</div>
+                </div>
+            </a>
         </div>
 
-        <div style="margin-top: 40px; padding: 20px; background: rgba(255, 255, 255, 0.02); border-radius: 16px; border: 1px dashed var(--glass-border);">
-            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
-                <i data-lucide="info" style="width: 14px; vertical-align: middle; margin-right: 4px;"></i>
-                Non-friends are restricted to 5 messages per month. Add friends for unlimited messaging.
+        <div class="card" style="background: rgba(139,92,246,0.05); border-color: rgba(139,92,246,0.1); padding: 24px;">
+            <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                <i data-lucide="info" style="color: var(--violet); width: 20px; flex-shrink: 0;"></i>
+                <h4 style="font-size: 0.95rem; font-weight: 600;">Message Limits</h4>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+                Standard accounts are limited to 5 messages/month for non-friends. Messaging friends is always unlimited.
             </p>
         </div>
     </div>
 
-    <!-- Main: Composer -->
-    <div class="glass-card" style="padding: 40px;">
-        <div style="margin-bottom: 32px; border-bottom: 1px solid var(--glass-border); padding-bottom: 24px;">
-            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">Compose Secure SMS</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Messages are encrypted and delivered instantly.</p>
+    <!-- Composer -->
+    <div class="card card-glow" style="padding: 40px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px;">
+            <div>
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 4px;">Compose SMS</h2>
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--emerald);">
+                    <i data-lucide="lock" style="width:14px;"></i> End-to-end Encrypted
+                </div>
+            </div>
+            <div class="icon-box icon-box-indigo" style="background: transparent; border: 1px solid var(--border);">
+                <i data-lucide="message-square-plus"></i>
+            </div>
         </div>
 
         <form id="smsForm">
             <div class="form-group">
-                <label class="form-label">Receiver Mobile Number</label>
-                <div style="position: relative;">
-                    <i data-lucide="smartphone" style="position: absolute; left: 16px; top: 12px; width: 18px; color: var(--text-muted);"></i>
-                    <input type="text" id="receiverMobile" class="form-input" placeholder="e.g. 03001234567" style="padding-left: 48px;" required />
+                <label class="form-label">Recipient Mobile</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="smartphone" class="icon"></i>
+                    <input type="text" id="receiverMobile" class="form-input" placeholder="e.g. 03001234567" required />
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">Message Content</label>
-                <textarea id="messageBody" class="form-input" rows="6" placeholder="Type your message here..." maxlength="120" style="resize: none;"></textarea>
-                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                    <span id="charCount" style="font-size: 0.8rem; color: var(--primary); font-weight: 500;">120 characters remaining</span>
-                    <span style="font-size: 0.8rem; color: var(--text-muted);">Max: 120 chars</span>
+            <div class="form-group" style="margin-top: 28px;">
+                <label class="form-label">Message Payload</label>
+                <textarea id="messageBody" class="form-input" placeholder="Enter encrypted payload here..." maxlength="120"></textarea>
+                
+                <div class="char-bar">
+                    <div id="charFill" class="char-bar-fill" style="width: 0%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 8px;">
+                    <span id="charCountText" style="font-size: 0.8rem; font-weight: 600; color: var(--indigo-light);">0 / 120</span>
+                    <span style="font-size: 0.8rem; color: var(--text-tertiary);">GSM standard length</span>
                 </div>
             </div>
 
-            <div style="margin-top: 40px;">
-                <button type="button" onclick="sendSms()" class="btn-primary" style="padding: 16px 40px;">
-                    Send Secure SMS <i data-lucide="send" style="width: 18px;"></i>
+            <div style="margin-top: 40px; display: flex; align-items: center; gap: 20px;">
+                <button type="button" onclick="sendSms()" class="btn btn-primary btn-lg" id="sendBtn">
+                    Execute Transmission <i data-lucide="send" style="width: 18px;"></i>
                 </button>
+                <div id="statusAlert" style="display: none; flex-grow: 1;"></div>
             </div>
-            <div id="statusMessage" style="margin-top: 20px; font-weight: 500;"></div>
         </form>
     </div>
 </div>
@@ -81,28 +93,42 @@
 @section Scripts {
     <script>
         const messageBody = document.getElementById('messageBody');
-        const charCount = document.getElementById('charCount');
+        const charCountText = document.getElementById('charCountText');
+        const charFill = document.getElementById('charFill');
+        const statusAlert = document.getElementById('statusAlert');
+        const sendBtn = document.getElementById('sendBtn');
 
         messageBody.addEventListener('input', () => {
-            const remaining = 120 - messageBody.value.length;
-            charCount.textContent = `${remaining} characters remaining`;
-            if (remaining < 20) charCount.style.color = 'var(--secondary)';
-            else charCount.style.color = 'var(--primary)';
+            const len = messageBody.value.length;
+            const percentage = (len / 120) * 100;
+            
+            charCountText.textContent = `${len} / 120`;
+            charFill.style.width = `${percentage}%`;
+            
+            if (len >= 100) charFill.style.background = 'linear-gradient(to right, #f59e0b, #ef4444)';
+            else charFill.style.background = 'linear-gradient(to right, var(--indigo), var(--violet))';
         });
+
+        function showAlert(type, msg) {
+            statusAlert.style.display = 'flex';
+            statusAlert.className = `alert alert-${type}`;
+            const icon = type === 'success' ? 'check-circle' : (type === 'error' ? 'x-circle' : 'loader');
+            statusAlert.innerHTML = `<i data-lucide="${icon}" style="width:18px;"></i> ${msg}`;
+            lucide.createIcons();
+        }
 
         async function sendSms() {
             const mobile = document.getElementById('receiverMobile').value;
             const body = document.getElementById('messageBody').value;
-            const status = document.getElementById('statusMessage');
 
             if (!mobile || !body) {
-                status.style.color = 'var(--secondary)';
-                status.innerText = "Please fill all fields.";
+                showAlert('error', 'Payload incomplete. Fill all fields.');
                 return;
             }
 
-            status.style.color = 'var(--text-muted)';
-            status.innerText = "Sending...";
+            showAlert('info', 'Encrypting and transmitting...');
+            sendBtn.disabled = true;
+            sendBtn.style.opacity = '0.7';
 
             try {
                 const response = await fetch('/Sms/SendMessage', {
@@ -113,17 +139,19 @@
 
                 const result = await response.json();
                 if (result.success) {
-                    status.style.color = '#10b981';
-                    status.innerText = "✓ Message sent successfully!";
+                    showAlert('success', 'Transmission successful.');
                     document.getElementById('smsForm').reset();
-                    charCount.textContent = "120 characters remaining";
+                    charCountText.textContent = "0 / 120";
+                    charFill.style.width = "0%";
+                    setTimeout(() => { statusAlert.style.display = 'none'; }, 4000);
                 } else {
-                    status.style.color = 'var(--secondary)';
-                    status.innerText = "✕ " + result.message;
+                    showAlert('error', result.message);
                 }
             } catch (err) {
-                status.style.color = 'var(--secondary)';
-                status.innerText = "✕ Connection error. Please try again.";
+                showAlert('error', 'Network failure during transmission.');
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.style.opacity = '1';
             }
         }
     </script>

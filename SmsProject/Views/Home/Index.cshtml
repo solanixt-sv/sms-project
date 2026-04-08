@@ -3,36 +3,65 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="dashboard-header" style="margin-bottom: 50px;">
-    <h1 class="text-gradient" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 10px;">Welcome back, @Model.Username!</h1>
-    <p style="color: var(--text-muted); font-size: 1.1rem;">Manage your social circle and send secure messages with ease.</p>
+<div class="page-header text-center" style="margin-bottom: 72px; padding-top: 20px;">
+    <h1 class="page-title" style="font-size: 3rem; margin-bottom: 16px;">Welcome back, <span style="color: var(--indigo-light);">@Model.Username</span></h1>
+    <p class="page-subtitle" style="font-size: 1.15rem; max-width: 600px; margin: 0 auto;">Experience the next generation of secure, global messaging. Connect with friends or manage your contacts.</p>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
-    <div class="glass-card">
-        <div style="background: rgba(99, 102, 241, 0.1); width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
-            <i data-lucide="send" style="color: var(--primary); width: 30px; height: 30px;"></i>
+<div class="grid-3">
+    <!-- Send SMS Card -->
+    <div class="card card-glow" onclick="location.href='@Url.Action("Index", "Sms")'" style="cursor: pointer;">
+        <div class="flex-center icon-box icon-box-indigo" style="margin-bottom: 24px; width: 64px; height: 64px;">
+            <i data-lucide="send"></i>
         </div>
-        <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Send SMS</h3>
-        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;">Compose and send secure messages to your global contacts instantly.</p>
-        <a asp-controller="Sms" asp-action="Index" class="btn-primary" style="width: 100%; justify-content: center;">Open Messages</a>
+        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Secure SMS</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.6;">Compose and broadcast encrypted messages to your global network instantly.</p>
+        <div style="display: flex; align-items: center; color: var(--indigo-light); font-weight: 600; font-size: 0.9rem;">
+            Open Composer <i data-lucide="arrow-right" style="width: 16px; margin-left: 6px;"></i>
+        </div>
     </div>
 
-    <div class="glass-card">
-        <div style="background: rgba(236, 72, 153, 0.1); width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
-            <i data-lucide="users" style="color: var(--secondary); width: 30px; height: 30px;"></i>
+    <!-- Social Circle Card -->
+    <div class="card" onclick="location.href='@Url.Action("Friends", "Social")'" style="cursor: pointer;">
+        <div class="flex-center icon-box icon-box-pink" style="margin-bottom: 24px; width: 64px; height: 64px;">
+            <i data-lucide="users"></i>
         </div>
-        <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Social Circle</h3>
-        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;">Manage your friends, pending requests, and expand your network.</p>
-        <a asp-controller="Social" asp-action="Friends" class="btn-primary" style="width: 100%; justify-content: center;">Friends List</a>
+        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Social Circle</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.6;">Expand your network, manage incoming requests, and connect with trusted peers.</p>
+        <div style="display: flex; align-items: center; color: var(--pink); font-weight: 600; font-size: 0.9rem;">
+            Manage Friends <i data-lucide="arrow-right" style="width: 16px; margin-left: 6px;"></i>
+        </div>
     </div>
 
-    <div class="glass-card">
-        <div style="background: rgba(139, 92, 246, 0.1); width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
-            <i data-lucide="settings" style="color: var(--accent); width: 30px; height: 30px;"></i>
+    <!-- Premium Services Card -->
+    <div class="card" onclick="location.href='@Url.Action("Index", "Service")'" style="cursor: pointer;">
+        <div class="flex-center icon-box icon-box-amber" style="margin-bottom: 24px; width: 64px; height: 64px;">
+            <i data-lucide="zap"></i>
         </div>
-        <h3 style="font-size: 1.25rem; margin-bottom: 12px;">Account</h3>
-        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;">Update your personal and professional profile details anytime.</p>
-        <a asp-controller="Account" asp-action="Profile" class="btn-primary" style="width: 100%; justify-content: center;">Quick Profile</a>
+        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Premium Tier</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.6;">Unlock unlimited messaging, priority delivery, and exclusive platform features.</p>
+        <div style="display: flex; align-items: center; color: var(--amber); font-weight: 600; font-size: 0.9rem;">
+            View Plans <i data-lucide="arrow-right" style="width: 16px; margin-left: 6px;"></i>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-lg" style="background: linear-gradient(145deg, rgba(30,27,75,0.4), rgba(15,23,42,0.4));">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div class="icon-box icon-box-emerald">
+                <i data-lucide="shield-check"></i>
+            </div>
+            <div>
+                <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">System Status: Optimal</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">All services are running normally. Encryption active.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <div class="badge badge-active"><i data-lucide="server" style="width:12px;"></i> Gateway Online</div>
+            @if(Model.IsPremium) {
+                <div class="badge badge-gold"><i data-lucide="star" style="width:12px;"></i> Premium</div>
+            }
+        </div>
     </div>
 </div>
