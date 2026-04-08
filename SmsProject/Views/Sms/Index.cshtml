@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<div class="container">
+    <div class="dashboard-grid" style="grid-template-columns: 1fr 2fr;">
+        <!-- Sidebar: Friends/Contacts -->
+        <div class="card glass-card">
+            <h3>Quick Select</h3>
+            <hr class="mb-3" style="border-color: var(--glass-border);">
+            
+            <h5>Friends</h5>
+            <ul class="nav flex-column mb-4" style="list-style: none;">
+                @foreach (var friend in ViewBag.Friends as List<SmsProject.Data.Friendship>)
+                {
+                    <li class="mb-2">
+                        <button class="btn-link text-muted" onclick="setReceiver('@friend.Id')">Friend #@friend.Id</button>
+                    </li>
+                }
+            </ul>
+
+            <h5>Contacts</h5>
+            <ul class="nav flex-column" style="list-style: none;">
+                @foreach (var contact in ViewBag.Contacts as List<SmsProject.Models.Contact>)
+                {
+                    <li class="mb-2">
+                        <button class="btn-link text-muted" onclick="setReceiver('@contact.MobileNumber')">@contact.FirstName (@contact.MobileNumber)</button>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!-- Main: Message Form -->
+        <div class="card glass-card">
+            <h3>Compose Message</h3>
+            <hr class="mb-4" style="border-color: var(--glass-border);">
+
+            <div id="alert-box" style="display: none;" class="alert"></div>
+
+            <form id="smsForm">
+                <div class="form-group">
+                    <label>Receiver Mobile Number</label>
+                    <input id="receiverMobile" name="receiverMobile" class="form-control" placeholder="10-digit number" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Message (Max 120 chars)</label>
+                    <textarea id="messageBody" name="messageBody" class="form-control" rows="4" maxlength="120" required></textarea>
+                    <small id="charCount" class="text-muted">120 characters remaining</small>
+                </div>
+
+                <div class="mt-4">
+                    <button type="button" onclick="sendMessage()" class="btn-primary">Send Secure SMS</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function setReceiver(mobile) {
+            document.getElementById('receiverMobile').value = mobile;
+        }
+
+        document.getElementById('messageBody').addEventListener('input', function() {
+            var remaining = 120 - this.value.length;
+            document.getElementById('charCount').innerText = remaining + ' characters remaining';
+        });
+
+        async function sendMessage() {
+            var mobile = document.getElementById('receiverMobile').value;
+            var body = document.getElementById('messageBody').value;
+            var alertBox = document.getElementById('alert-box');
+
+            if (!mobile || !body) return;
+
+            try {
+                const response = await fetch('/Sms/SendMessage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `receiverMobile=${mobile}&messageBody=${body}`
+                });
+                const result = await response.json();
+
+                alertBox.innerText = result.message;
+                alertBox.className = result.success ? 'alert text-success' : 'alert text-danger';
+                alertBox.style.display = 'block';
+
+                if (result.success) {
+                    document.getElementById('messageBody').value = '';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+}

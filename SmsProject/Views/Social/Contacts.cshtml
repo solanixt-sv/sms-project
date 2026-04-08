@@ -1,0 +1,60 @@
+@model List<SmsProject.Models.Contact>
+@{
+    ViewData["Title"] = "Contacts";
+}
+
+<div class="container">
+    <div class="dashboard-grid" style="grid-template-columns: 1fr 2fr;">
+        <!-- Add Contact Form -->
+        <div class="card glass-card">
+            <h3>Add New Contact</h3>
+            <form asp-action="AddContact" method="post" class="mt-4">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input name="FirstName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input name="LastName" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input name="MobileNumber" class="form-control" required maxlength="10" />
+                </div>
+                <button type="submit" class="btn-primary w-100">Save Contact</button>
+            </form>
+        </div>
+
+        <!-- Contact List -->
+        <div class="card glass-card">
+            <h3>Address Book</h3>
+            <div class="mt-4">
+                <table class="table" style="width: 100%; color: white; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid var(--glass-border); text-align: left;">
+                            <th style="padding: 1rem;">Name</th>
+                            <th style="padding: 1rem;">Mobile</th>
+                            <th style="padding: 1rem;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var contact in Model)
+                        {
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <td style="padding: 1rem;">@contact.FirstName @contact.LastName</td>
+                                <td style="padding: 1rem;">@contact.MobileNumber</td>
+                                <td style="padding: 1rem;">
+                                    <a asp-controller="Sms" asp-action="Index" class="text-primary" style="text-decoration: none;">Message</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (!Model.Any())
+                {
+                    <p class="text-center text-muted mt-4">No contacts found.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

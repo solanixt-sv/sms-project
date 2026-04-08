@@ -1,0 +1,76 @@
+@{
+    ViewData["Title"] = "Services";
+}
+
+<div class="container">
+    <div class="card glass-card text-center mb-5">
+        <h2>Activate Premium Services</h2>
+        <p class="text-muted">Enhance your messaging experience with our premium packages.</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Package 1 -->
+        <div class="card glass-card">
+            <h3 class="text-primary">Starter Pack</h3>
+            <p class="display-6 mt-3">$4.99</p>
+            <ul class="mt-4 mb-4 text-muted" style="list-style: none;">
+                <li><i data-lucide="check" class="text-success"></i> 500 SMS / Month</li>
+                <li><i data-lucide="check" class="text-success"></i> Priority Support</li>
+                <li><i data-lucide="check" class="text-success"></i> 10 Contacts Profile</li>
+            </ul>
+            <button class="btn-primary w-100" onclick="openPayment('Starter Pack')">Activate Now</button>
+        </div>
+
+        <!-- Package 2 -->
+        <div class="card glass-card" style="border: 1px solid var(--primary);">
+            <div style="position: absolute; top: -10px; right: 20px; background: var(--primary); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem;">POPULAR</div>
+            <h3 class="text-primary">Pro Pack</h3>
+            <p class="display-6 mt-3">$9.99</p>
+            <ul class="mt-4 mb-4 text-muted" style="list-style: none;">
+                <li><i data-lucide="check" class="text-success"></i> Unlimited SMS</li>
+                <li><i data-lucide="check" class="text-success"></i> Global Reach</li>
+                <li><i data-lucide="check" class="text-success"></i> Unlimited Contacts</li>
+            </ul>
+            <button class="btn-primary w-100" onclick="openPayment('Pro Pack')">Activate Now</button>
+        </div>
+    </div>
+
+    <!-- Hidden Payment Modal -->
+    <div id="paymentModal" class="glass-card" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; padding: 2rem; width: 400px; border: 1px solid var(--primary);">
+        <h3 id="selectedService">Activate Service</h3>
+        <form asp-action="Activate" method="post" class="mt-4">
+            <input type="hidden" id="serviceName" name="serviceName" />
+            <div class="form-group">
+                <label>Card Number</label>
+                <input name="cardNumber" class="form-control" placeholder="XXXX XXXX XXXX XXXX" required />
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Expiry (MM/YY)</label>
+                    <input name="expiry" class="form-control" placeholder="12/26" required />
+                </div>
+                <div class="form-group" style="flex: 0.5;">
+                    <label>CVV</label>
+                    <input name="cvv" class="form-control" placeholder="123" required />
+                </div>
+            </div>
+            <div class="mt-4" style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn-primary" style="flex: 1;">Pay & Activate</button>
+                <button type="button" class="btn-secondary" onclick="closePayment()" style="flex: 1;">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openPayment(name) {
+            document.getElementById('serviceName').value = name;
+            document.getElementById('selectedService').innerText = 'Activate ' + name;
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+        function closePayment() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+    </script>
+}

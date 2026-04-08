@@ -1,0 +1,52 @@
+@model SmsProject.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container" style="max-width: 600px;">
+    <div class="card glass-card">
+        <h2 class="mb-4">Create Account</h2>
+        <form asp-action="Register" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Username" class="form-control" placeholder="Choose a username" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="email@example.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MobileNumber" class="form-label">Mobile Number</label>
+                <input asp-for="MobileNumber" class="form-control" placeholder="10-digit mobile number" />
+                <span asp-validation-for="MobileNumber" class="text-danger"></span>
+            </div>
+
+            <div class="row" style="display: flex; gap: 1rem;">
+                <div class="form-group" style="flex: 1;">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label class="form-label">Confirm Password</label>
+                    <input name="confirmPassword" type="password" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Verification Code (Enter 1234)</label>
+                <div style="display: flex; gap: 1rem;">
+                    <input name="verificationCode" class="form-control" placeholder="Enter code" />
+                    <input name="actualCode" type="hidden" value="1234" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary w-100 mt-3">Register Now</button>
+        </form>
+    </div>
+</div>

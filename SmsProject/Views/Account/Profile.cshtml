@@ -1,0 +1,72 @@
+@model SmsProject.Models.ApplicationUser
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="container">
+    <div class="card glass-card">
+        <h2 class="mb-4">Profile Settings</h2>
+        
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid var(--glass-border); margin-bottom: 2rem;">
+            <button class="btn-link text-primary" onclick="showTab('personal')">Personal Details</button>
+            <button class="btn-link text-white" onclick="showTab('professional')">Professional Details</button>
+        </div>
+
+        <div id="personal-tab">
+            <form asp-action="EditPersonal" method="post">
+                <div class="dashboard-grid">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input asp-for="FullName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select asp-for="Gender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input asp-for="DOB" type="date" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input asp-for="Address" class="form-control" />
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Update Personal Details</button>
+            </form>
+        </div>
+
+        <div id="professional-tab" style="display: none;">
+            <form asp-action="EditProfessional" method="post">
+                <div class="dashboard-grid">
+                    <div class="form-group">
+                        <label>Qualification</label>
+                        <input asp-for="Qualification" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Organization</label>
+                        <input asp-for="Organization" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Designation</label>
+                        <input asp-for="Designation" class="form-control" />
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Update Professional Details</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showTab(tabName) {
+            document.getElementById('personal-tab').style.display = tabName === 'personal' ? 'block' : 'none';
+            document.getElementById('professional-tab').style.display = tabName === 'professional' ? 'block' : 'none';
+        }
+    </script>
+}
