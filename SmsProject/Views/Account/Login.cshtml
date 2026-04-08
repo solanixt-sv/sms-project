@@ -2,41 +2,41 @@
     ViewData["Title"] = "Login";
 }
 
-<div style="display: flex; justify-content: center; align-items: center; min-height: 70vh;">
-    <div class="glass-card" style="width: 100%; max-width: 440px;">
-        <div style="text-align: center; margin-bottom: 32px;">
-            <div style="display: inline-flex; background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 20px; margin-bottom: 20px;">
-                <i data-lucide="shield-check" style="color: var(--primary); width: 32px; height: 32px;"></i>
+<div class="flex-center" style="min-height: calc(100vh - 200px);">
+    <div class="card card-glow" style="width: 100%; max-width: 420px; padding: 48px;">
+        <div class="text-center" style="margin-bottom: 40px;">
+            <div class="icon-box icon-box-indigo" style="margin: 0 auto 20px; width: 56px; height: 56px;">
+                <i data-lucide="fingerprint" style="width: 28px; height: 28px;"></i>
             </div>
-            <h2 style="font-size: 1.75rem; font-weight: 700;">Welcome Back</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Enter your credentials to access your account</p>
+            <h2 class="page-title" style="font-size: 1.8rem; margin-bottom: 8px;">Authentication Link</h2>
+            <p class="text-muted">Enter credentials to access the secure grid.</p>
         </div>
 
         <form asp-action="Login" method="post">
             <div class="form-group">
-                <label class="form-label">Username</label>
-                <div style="position: relative;">
-                    <i data-lucide="user" style="position: absolute; left: 16px; top: 12px; width: 18px; color: var(--text-muted);"></i>
-                    <input name="username" class="form-input" placeholder="e.g. john_doe" style="padding-left: 48px;" required />
+                <label class="form-label">Identifier (Username)</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="user" class="icon"></i>
+                    <input name="username" class="form-input" placeholder="e.g. jdoe99" required />
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">Password</label>
-                <div style="position: relative;">
-                    <i data-lucide="lock" style="position: absolute; left: 16px; top: 12px; width: 18px; color: var(--text-muted);"></i>
-                    <input name="password" type="password" class="form-input" placeholder="••••••••" style="padding-left: 48px;" required />
+            <div class="form-group" style="margin-bottom: 32px;">
+                <label class="form-label">Passphrase</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="lock" class="icon"></i>
+                    <input name="password" type="password" class="form-input" placeholder="••••••••" required />
                 </div>
             </div>
 
-            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-                Sign In <i data-lucide="arrow-right" style="width: 18px;"></i>
+            <button type="submit" class="btn btn-primary btn-full btn-lg">
+                Initiate Secure Session <i data-lucide="arrow-right" style="width: 18px;"></i>
             </button>
         </form>
 
-        <div style="text-align: center; margin-top: 32px; border-top: 1px solid var(--glass-border); padding-top: 24px;">
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Don't have an account? 
-                <a asp-action="Register" style="color: var(--primary); text-decoration: none; font-weight: 600;">Create one now</a>
+        <div class="text-center mt-lg" style="border-top: 1px solid var(--border); padding-top: 24px;">
+            <p class="text-muted" style="font-size: 0.9rem;">No credentials yet? 
+                <a asp-action="Register" style="color: var(--indigo-light); text-decoration: none; font-weight: 600; margin-left: 4px;">Request Access</a>
             </p>
         </div>
     </div>

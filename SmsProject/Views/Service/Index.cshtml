@@ -3,103 +3,141 @@
     ViewData["Title"] = "Premium Services";
 }
 
-<div style="text-align: center; margin-bottom: 60px;">
-    <h1 class="text-gradient" style="font-size: 2.8rem; font-weight: 700; margin-bottom: 16px;">Elevate Your Experience</h1>
-    <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Upgrade to premium and unlock unlimited messaging, global delivery, and priority support.</p>
+<div class="page-header text-center" style="margin-bottom: 64px;">
+    <h1 class="page-title" style="font-size: 3.2rem;">Upgrade Authorization</h1>
+    <p class="page-subtitle" style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Bypass standard routing limits. Gain Priority access to the global SMS gateway.</p>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; justify-content: center; max-width: 1000px; margin: 0 auto;">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px; justify-content: center; max-width: 900px; margin: 0 auto;">
     
-    <!-- Free Plan -->
-    <div class="glass-card" style="display: flex; flex-direction: column; opacity: 0.8;">
-        <div style="margin-bottom: 30px;">
-            <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Current Plan</span>
-            <h2 style="font-size: 2rem; margin-top: 10px;">Free Tier</h2>
+    <!-- Standard Tier -->
+    <div class="card" style="display: flex; flex-direction: column; opacity: 0.8; padding: 48px;">
+        <div style="margin-bottom: 40px;">
+            <div class="badge" style="background: var(--surface); color: var(--text-secondary); margin-bottom: 24px;">CURRENT CLEARANCE</div>
+            <h2 style="font-size: 2.2rem; margin-bottom: 8px;">Standard <span style="font-size: 1rem; color: var(--text-tertiary);">Tier 1</span></h2>
+            <p style="color: var(--text-tertiary);">Basic access to the communication grid.</p>
         </div>
-        <div style="flex-grow: 1;">
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px;">
-                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
-                    <i data-lucide="check-circle" style="color: #10b981; width: 18px;"></i> 5 Messages / Month (Non-friends)
+        
+        <div style="flex-grow: 1; border-top: 1px solid var(--border); padding-top: 32px;">
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 20px;">
+                <li style="display: flex; align-items: flex-start; gap: 16px;">
+                    <i data-lucide="check-circle-2" style="color: var(--text-secondary); width: 22px; flex-shrink: 0; margin-top: 2px;"></i> 
+                    <div>
+                        <div style="font-weight: 500;">5 Pings / Cycle</div>
+                        <div style="font-size: 0.85rem; color: var(--text-tertiary);">Restriction on unverified nodes</div>
+                    </div>
                 </li>
-                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
-                    <i data-lucide="check-circle" style="color: #10b981; width: 18px;"></i> Unlimited Friend Messages
-                </li>
-                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--text-muted);">
-                    <i data-lucide="x-circle" style="width: 18px;"></i> Priority Delivery
+                 <li style="display: flex; align-items: flex-start; gap: 16px;">
+                    <i data-lucide="check-circle-2" style="color: var(--text-secondary); width: 22px; flex-shrink: 0; margin-top: 2px;"></i> 
+                    <div>
+                        <div style="font-weight: 500;">Unlimited Trusted Pings</div>
+                        <div style="font-size: 0.85rem; color: var(--text-tertiary);">For verified contacts only</div>
+                    </div>
                 </li>
             </ul>
         </div>
-        @if (Model.IsPremium) {
-            <div style="margin-top: 40px; text-align: center; color: var(--text-muted);">Downgrade not available</div>
-        } else {
-            <button class="btn-primary" style="margin-top: 40px; background: rgba(255,255,255,0.05); color: var(--text-muted); box-shadow: none; cursor: default;">Active</button>
-        }
+
+        <div style="margin-top: 48px;">
+            @if (Model.IsPremium) {
+                <div style="text-align: center; color: var(--text-tertiary); font-size: 0.9rem;">Cannot downgrade active subscription.</div>
+            } else {
+                <button class="btn btn-ghost btn-full btn-lg" style="opacity: 0.5; cursor: not-allowed;">Currently Active</button>
+            }
+        </div>
     </div>
 
-    <!-- Premium Plan -->
-    <div class="glass-card" style="border: 2px solid var(--primary); transform: scale(1.05); position: relative; overflow: hidden;">
-        <div style="position: absolute; top: 12px; right: -30px; background: var(--secondary); padding: 4px 40px; transform: rotate(45deg); font-size: 0.75rem; font-weight: 700; box-shadow: 0 5px 10px rgba(0,0,0,0.3);">POPULAR</div>
+    <!-- Premium Tier -->
+    <div class="card pricing-card-featured card-glow" style="display: flex; flex-direction: column; padding: 48px;">
         
-        <div style="margin-bottom: 30px;">
-            <span class="badge badge-premium">PREMIUM</span>
-            <h2 style="font-size: 2rem; margin-top: 10px;">Unlimited <span style="font-size: 1rem; color: var(--text-muted);">/ $9.99</span></h2>
+        <div style="margin-bottom: 40px;">
+            <div class="badge badge-gold" style="margin-bottom: 24px;">MAXIMUM CLEARANCE</div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 8px; background: linear-gradient(135deg, #fff, var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Premium <span style="font-size: 1.2rem; color: var(--amber); -webkit-text-fill-color: initial;">$9.99</span><span style="font-size: 0.9rem; color: var(--text-tertiary); -webkit-text-fill-color: initial; font-weight: 400;">/mo</span></h2>
+            <p style="color: var(--text-secondary);">Direct access to the priority gateway.</p>
         </div>
         
-        <div style="flex-grow: 1;">
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px;">
-                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
-                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> Unlimited Global Messages
+        <div style="flex-grow: 1; border-top: 1px solid rgba(245,158,11,0.2); padding-top: 32px;">
+             <ul style="list-style: none; display: flex; flex-direction: column; gap: 20px;">
+                <li style="display: flex; align-items: flex-start; gap: 16px;">
+                    <i data-lucide="zap" style="color: var(--amber); width: 22px; flex-shrink: 0; margin-top: 2px;"></i> 
+                    <div>
+                        <div style="font-weight: 600; color: #fff;">Unlimited Broadcasting</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">To any node on the grid</div>
+                    </div>
                 </li>
-                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
-                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> No Friend Restrictions
+                 <li style="display: flex; align-items: flex-start; gap: 16px;">
+                    <i data-lucide="zap" style="color: var(--amber); width: 22px; flex-shrink: 0; margin-top: 2px;"></i> 
+                    <div>
+                        <div style="font-weight: 600; color: #fff;">Priority Routing</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Skip the message queue</div>
+                    </div>
                 </li>
-                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
-                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> Instant Priority Delivery
-                </li>
-                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem;">
-                    <i data-lucide="zap" style="color: #f59e0b; width: 18px;"></i> 24/7 Priority Support
+                <li style="display: flex; align-items: flex-start; gap: 16px;">
+                    <i data-lucide="zap" style="color: var(--amber); width: 22px; flex-shrink: 0; margin-top: 2px;"></i> 
+                    <div>
+                        <div style="font-weight: 600; color: #fff;">Direct Support Line</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">24/7 dedicated channel</div>
+                    </div>
                 </li>
             </ul>
         </div>
 
-        @if (Model.IsPremium)
-        {
-            <div style="margin-top: 40px; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; padding: 12px; border-radius: 12px; text-align: center; color: #10b981; font-weight: 600;">
-                <i data-lucide="check" style="width: 18px; vertical-align: middle;"></i> Subscription Active
-            </div>
-        }
-        else
-        {
-            <button onclick="document.getElementById('payModal').style.display='flex'" class="btn-primary" style="margin-top: 40px; width: 100%; justify-content: center;">Upgrade Now</button>
-        }
+        <div style="margin-top: 48px;">
+            @if (Model.IsPremium)
+            {
+                <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 16px; border-radius: var(--radius-sm); text-align: center; color: var(--emerald); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i data-lucide="shield-check" style="width: 20px;"></i> Clearance Granted
+                </div>
+            }
+            else
+            {
+                 <button onclick="document.getElementById('payModal').classList.add('open')" class="btn btn-primary btn-full btn-lg" style="background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 10px 25px rgba(245,158,11,0.4);">
+                    Request Upgrade <i data-lucide="arrow-right" style="width: 18px;"></i>
+                </button>
+            }
+        </div>
     </div>
 </div>
 
-<!-- Simple Payment Modal -->
-<div id="payModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center;">
-    <div class="glass-card" style="width: 100%; max-width: 440px; padding: 40px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-            <i data-lucide="credit-card" style="width: 48px; height: 48px; color: var(--primary); margin-bottom: 16px;"></i>
-            <h3>Secure Checkout</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Upgrade to Premium for $9.99/month</p>
+<!-- Payment Modal -->
+<div id="payModal" class="modal-overlay">
+    <div class="modal card-glow">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px;">
+             <div>
+                <div class="icon-box icon-box-indigo" style="margin-bottom: 16px; width: 48px; height: 48px;">
+                    <i data-lucide="credit-card" style="width: 24px;"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; font-weight: 700;">Secure Transaction</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Authorizing $9.99 charge.</p>
+             </div>
+             <button onclick="document.getElementById('payModal').classList.remove('open')" style="background: none; border: none; color: var(--text-tertiary); cursor: pointer;"><i data-lucide="x"></i></button>
         </div>
+
         <form asp-action="ActivatePremium" method="post">
-            <div class="form-group">
-                <label class="form-label">Card Number</label>
-                <input class="form-input" placeholder="XXXX XXXX XXXX XXXX" required />
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="form-group">
-                    <label class="form-label">Expiry</label>
-                    <input class="form-input" placeholder="MM/YY" required />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">CVC</label>
-                    <input class="form-input" placeholder="XXX" required />
+            <div class="form-group" style="margin-bottom: 24px;">
+                <label class="form-label">Sequence (Card Number)</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="hash" class="icon"></i>
+                    <input class="form-input" placeholder="XXXX XXXX XXXX XXXX" required />
                 </div>
             </div>
-            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;">Confirm & Pay</button>
-            <button type="button" onclick="document.getElementById('payModal').style.display='none'" class="btn-primary" style="width: 100%; margin-top: 10px; background: transparent; box-shadow: none; color: var(--text-muted);">Cancel</button>
+            <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="form-group">
+                    <label class="form-label">Expiration</label>
+                     <div class="input-icon-wrap">
+                        <i data-lucide="calendar" class="icon"></i>
+                        <input class="form-input" placeholder="MM/YY" required />
+                     </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Security Key (CVC)</label>
+                     <div class="input-icon-wrap">
+                        <i data-lucide="lock" class="icon"></i>
+                        <input class="form-input" placeholder="XXX" required />
+                     </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-full btn-lg">Authorize Payment</button>
         </form>
     </div>
 </div>

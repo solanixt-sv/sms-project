@@ -3,52 +3,54 @@
     ViewData["Title"] = "Address Book";
 }
 
-<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
     <div>
-        <h1 class="text-gradient" style="font-size: 2.2rem; font-weight: 700; margin-bottom: 8px;">Address Book</h1>
-        <p style="color: var(--text-muted);">Manage your personal contacts and mobile numbers</p>
+        <h1 class="page-title">Directory</h1>
+        <p class="page-subtitle">Offline address book for unverified nodes.</p>
     </div>
-    <button onclick="document.getElementById('addModal').style.display='flex'" class="btn-primary">
-        <i data-lucide="plus"></i> Add New Contact
+    <button onclick="document.getElementById('addModal').classList.add('open')" class="btn btn-primary btn-lg">
+        <i data-lucide="plus-circle" style="width: 18px;"></i> Add Entry
     </button>
 </div>
 
-<div class="glass-card">
+<div class="card" style="padding: 40px; min-height: 500px;">
     @if (Model.Count == 0)
     {
-        <div style="text-align: center; padding: 100px 0;">
-            <i data-lucide="book-x" style="width: 64px; height: 64px; color: var(--glass-border); margin-bottom: 24px;"></i>
-            <h3 style="color: var(--text-main); margin-bottom: 12px;">Your Address Book is Empty</h3>
-            <p style="color: var(--text-muted);">Start adding contacts to quickly send them secure messages.</p>
+        <div class="flex-center" style="flex-direction: column; height: 300px; opacity: 0.5;">
+            <div class="icon-box icon-box-indigo" style="width: 80px; height: 80px; margin-bottom: 24px;">
+                <i data-lucide="book-dashed" style="width: 40px; height: 40px;"></i>
+            </div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 8px;">Directory Empty</h3>
+            <p style="color: var(--text-tertiary);">No entries found in local storage.</p>
         </div>
     }
     else
     {
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+        <div class="grid-3">
             @foreach (var contact in Model)
             {
-                <div style="background: rgba(255, 255, 255, 0.02); padding: 24px; border-radius: 20px; border: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 16px;">
-                    <div style="display: flex; align-items: center; gap: 16px;">
-                        <div style="width: 50px; height: 50px; border-radius: 16px; background: rgba(139, 92, 246, 0.1); display: flex; align-items: center; justify-content: center;">
-                            <i data-lucide="user" style="color: var(--accent); width: 24px;"></i>
+                <div class="card" style="padding: 24px; border: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <div class="icon-box icon-box-cyan" style="width: 48px; height: 48px;">
+                            <i data-lucide="user-square-2"></i>
                         </div>
                         <div>
-                            <div style="font-size: 1.1rem; font-weight: 600;">@contact.Name</div>
-                            <div style="font-size: 0.85rem; color: var(--text-muted);">Added: @contact.CreatedAt.ToString("MMM dd, yyyy")</div>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text);">@contact.Name</div>
+                            <div style="font-size: 0.8rem; color: var(--text-tertiary);">Entry: @contact.CreatedAt.ToString("yy.MM.dd")</div>
                         </div>
                     </div>
                     
-                    <div style="background: rgba(255, 255, 255, 0.03); padding: 12px 16px; border-radius: 12px; display: flex; align-items: center; gap: 12px;">
-                        <i data-lucide="smartphone" style="width: 16px; color: var(--primary);"></i>
-                        <span style="font-family: monospace; font-size: 1rem; letter-spacing: 1px;">@contact.MobileNumber</span>
+                    <div style="background: var(--bg); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+                        <span style="font-family: monospace; font-size: 1.05rem; letter-spacing: 2px; color: var(--cyan);">@contact.MobileNumber</span>
+                        <i data-lucide="copy" style="width: 16px; color: var(--text-tertiary); cursor: pointer;" title="Copy to clipboard"></i>
                     </div>
 
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <a href="/Sms/Index?to=@contact.MobileNumber" class="btn-primary" style="flex: 1; justify-content: center; font-size: 0.85rem; padding: 10px;">Message</a>
-                        <form asp-action="RemoveContact" asp-controller="Social" method="post" style="flex: 0 0 50px;">
+                    <div style="display: flex; gap: 12px;">
+                        <a href="/Sms/Index?to=@contact.MobileNumber" class="btn btn-ghost" style="flex: 1; justify-content: center;">Route Msg</a>
+                        <form asp-action="RemoveContact" asp-controller="Social" method="post">
                             <input type="hidden" name="contactId" value="@contact.Id" />
-                            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 10px; background: rgba(236, 72, 153, 0.1); color: var(--secondary); box-shadow: none;">
-                                <i data-lucide="trash-2" style="width: 18px;"></i>
+                            <button type="submit" class="btn btn-danger" style="padding: 10px 14px; border-radius: var(--radius-sm);">
+                                <i data-lucide="trash" style="width: 16px; margin: 0;"></i>
                             </button>
                         </form>
                     </div>
@@ -58,22 +60,34 @@
     }
 </div>
 
-<!-- Add Contact Modal (Simple Overlay) -->
-<div id="addModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center;">
-    <div class="glass-card" style="width: 100%; max-width: 400px; padding: 40px;">
-        <h3 style="margin-bottom: 24px;">Add New Contact</h3>
+<!-- Add Modal -->
+<div id="addModal" class="modal-overlay">
+    <div class="modal card-glow">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+            <h3 style="font-size: 1.4rem; font-weight: 700; display: flex; align-items: center; gap: 12px;">
+                <div class="icon-box icon-box-indigo" style="width: 32px; height: 32px;"><i data-lucide="file-plus-2" style="width:16px;"></i></div> New Entry
+            </h3>
+            <button onclick="document.getElementById('addModal').classList.remove('open')" style="background: none; border: none; color: var(--text-tertiary); cursor: pointer;"><i data-lucide="x"></i></button>
+        </div>
+
         <form asp-action="AddContact" asp-controller="Social" method="post">
             <div class="form-group">
-                <label class="form-label">Full Name</label>
-                <input name="name" class="form-input" placeholder="e.g. John Smith" required />
+                <label class="form-label">Classification / Name</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="tag" class="icon"></i>
+                    <input name="name" class="form-input" placeholder="e.g. Alpha Lead" required />
+                </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Mobile Number</label>
-                <input name="mobile" class="form-input" placeholder="e.g. 03001234567" required />
+            <div class="form-group" style="margin-bottom: 32px;">
+                <label class="form-label">Routing Number</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="hash" class="icon"></i>
+                    <input name="mobile" class="form-input" placeholder="e.g. 03001234567" required />
+                </div>
             </div>
-            <div style="display: flex; gap: 15px; margin-top: 20px;">
-                <button type="submit" class="btn-primary" style="flex: 1; justify-content: center;">Save Contact</button>
-                <button type="button" onclick="document.getElementById('addModal').style.display='none'" class="btn-primary" style="background: rgba(255,255,255,0.05); color: var(--text-muted); box-shadow: none;">Cancel</button>
+            <div style="display: flex; gap: 16px;">
+                <button type="button" onclick="document.getElementById('addModal').classList.remove('open')" class="btn btn-ghost" style="flex: 1; justify-content: center;">Abort</button>
+                <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">Save Entry</button>
             </div>
         </form>
     </div>

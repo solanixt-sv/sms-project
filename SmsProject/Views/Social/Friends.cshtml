@@ -3,23 +3,27 @@
     ViewData["Title"] = "My Friends";
 }
 
-<div style="margin-bottom: 40px;">
-    <h1 class="text-gradient" style="font-size: 2.2rem; font-weight: 700; margin-bottom: 8px;">Social Circle</h1>
-    <p style="color: var(--text-muted);">Manage your friends and pending requests</p>
+<div class="page-header">
+    <h1 class="page-title">Trust Network</h1>
+    <p class="page-subtitle">Manage secured connections and pending handshake requests.</p>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 350px; gap: 40px; align-items: start;">
-    <!-- Left: Friends List -->
-    <div class="glass-card">
-        <h3 style="margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
-            <i data-lucide="users" style="color: var(--primary);"></i> Active Friends
+<div style="display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start;">
+    <!-- Left: Active Connections -->
+    <div class="card">
+        <h3 style="margin-bottom: 28px; display: flex; align-items: center; gap: 12px; font-size: 1.1rem; color: var(--text);">
+            <div class="icon-box icon-box-emerald" style="width: 36px; height: 36px;">
+                <i data-lucide="shield-check" style="width: 18px;"></i>
+            </div>
+            Active Connections
         </h3>
         
         @if (Model.Friends.Count == 0)
         {
-            <div style="text-align: center; padding: 60px 0;">
-                <i data-lucide="user-minus" style="width: 48px; height: 48px; color: var(--glass-border); margin-bottom: 16px;"></i>
-                <p style="color: var(--text-muted);">No active friends yet. Start connecting!</p>
+            <div style="text-align: center; padding: 60px 0; border: 1px dashed var(--border); border-radius: var(--radius-sm); background: var(--surface);">
+                <i data-lucide="user-x" style="width: 48px; height: 48px; color: var(--text-tertiary); margin-bottom: 20px;"></i>
+                <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-secondary);">No secured connections found.</h4>
+                <p style="color: var(--text-tertiary); font-size: 0.9rem;">Initiate handshakes to build your trust network.</p>
             </div>
         }
         else
@@ -27,17 +31,19 @@
             <div style="display: grid; gap: 16px;">
                 @foreach (var friend in Model.Friends)
                 {
-                    <div style="background: rgba(255, 255, 255, 0.02); padding: 20px; border-radius: 16px; border: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center;">
+                    <div class="friend-card">
                         <div style="display: flex; align-items: center; gap: 16px;">
-                            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                            <div class="avatar">
                                 @friend.Username[0].ToString().ToUpper()
                             </div>
                             <div>
-                                <div style="font-weight: 600;">@friend.Username</div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">@friend.Mobile</div>
+                                <div style="font-weight: 700; color: var(--text);">@friend.Username</div>
+                                <div style="font-family: monospace; font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">TID: @friend.Mobile</div>
                             </div>
                         </div>
-                        <a href="/Sms/Index?to=@friend.Mobile" class="btn-primary" style="padding: 10px 20px; font-size: 0.85rem;">Message</a>
+                        <a href="/Sms/Index?to=@friend.Mobile" class="btn btn-primary btn-sm">
+                            <i data-lucide="message-square" style="width: 14px;"></i> Secure Link
+                        </a>
                     </div>
                 }
             </div>
@@ -45,41 +51,62 @@
     </div>
 
     <!-- Right: Pending Requests -->
-    <div class="glass-card">
-        <h3 style="margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
-            <i data-lucide="user-plus" style="color: var(--secondary);"></i> Pending Requests
-        </h3>
-
-        <div style="display: grid; gap: 16px;">
-            @foreach (var req in Model.PendingRequests)
-            {
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 16px; border-radius: 16px; border: 1px solid var(--glass-border);">
-                    <div style="font-weight: 600; margin-bottom: 4px;">@req.Requester.Username</div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">wants to be your friend</div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <form asp-action="AcceptFriend" asp-controller="Social" method="post">
-                            <input type="hidden" name="requestId" value="@req.Id" />
-                            <button type="submit" class="btn-primary" style="width: 100%; padding: 8px; font-size: 0.8rem;">Accept</button>
-                        </form>
-                        <form asp-action="RejectFriend" asp-controller="Social" method="post">
-                            <input type="hidden" name="requestId" value="@req.Id" />
-                            <button type="submit" class="btn-primary" style="width: 100%; padding: 8px; font-size: 0.8rem; background: rgba(236, 72, 153, 0.1); color: var(--secondary); box-shadow: none;">Reject</button>
-                        </form>
-                    </div>
-                </div>
-            }
-            @if (Model.PendingRequests.Count == 0)
-            {
-                <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 20px;">No pending requests.</p>
-            }
-        </div>
-
-        <div style="margin-top: 32px; border-top: 1px solid var(--glass-border); padding-top: 24px;">
-            <h4 style="font-size: 0.9rem; margin-bottom: 16px;">Add New Friend</h4>
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- New Request Form -->
+         <div class="card card-glow" style="padding: 28px; background: linear-gradient(180deg, rgba(139,92,246,0.05), transparent);">
+             <h4 style="font-size: 1.05rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="scan-line" style="color: var(--violet); width: 18px;"></i> Broadcast Handshake
+            </h4>
             <form asp-action="SendFriendRequest" asp-controller="Social" method="post">
-                <input name="friendUsername" class="form-input" placeholder="Enter username" style="margin-bottom: 12px;" required />
-                <button type="submit" class="btn-primary" style="width: 100%; padding: 10px; font-size: 0.85rem;">Send Request</button>
+                <div class="input-icon-wrap" style="margin-bottom: 16px;">
+                     <i data-lucide="at-sign" class="icon"></i>
+                     <input name="friendUsername" class="form-input" placeholder="Target Identifier" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Initiate Request <i data-lucide="move-right" style="width: 16px;"></i></button>
             </form>
+         </div>
+
+        <!-- Pending Items -->
+        <div class="card" style="padding: 28px;">
+            <h3 style="margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-size: 1.05rem; color: var(--text);">
+                <div class="icon-box icon-box-amber" style="width: 32px; height: 32px;">
+                    <i data-lucide="clock" style="width: 16px;"></i>
+                </div>
+                Pending Verification
+            </h3>
+
+            <div style="display: grid; gap: 16px;">
+                @foreach (var req in Model.PendingRequests)
+                {
+                    <div style="background: var(--surface); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                             <div class="avatar" style="width: 32px; height: 32px; font-size: 0.8rem; background: var(--surface-hover);">
+                                @req.Requester.Username[0].ToString().ToUpper()
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.95rem;">@req.Requester.Username</div>
+                                <div style="font-size: 0.8rem; color: var(--text-tertiary);">Requesting connection</div>
+                            </div>
+                        </div>
+                        <div class="grid-2" style="gap: 10px;">
+                            <form asp-action="AcceptFriend" asp-controller="Social" method="post">
+                                <input type="hidden" name="requestId" value="@req.Id" />
+                                <button type="submit" class="btn btn-success btn-full btn-sm">Authorize</button>
+                            </form>
+                            <form asp-action="RejectFriend" asp-controller="Social" method="post">
+                                <input type="hidden" name="requestId" value="@req.Id" />
+                                <button type="submit" class="btn btn-danger btn-full btn-sm">Deny</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+                @if (Model.PendingRequests.Count == 0)
+                {
+                    <div style="text-align: center; padding: 20px 0;">
+                         <p style="color: var(--text-tertiary); font-size: 0.9rem;">Node queue is empty.</p>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>

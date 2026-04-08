@@ -2,57 +2,75 @@
     ViewData["Title"] = "Register";
 }
 
-<div style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 40px 0;">
-    <div class="glass-card" style="width: 100%; max-width: 500px;">
-        <div style="text-align: center; margin-bottom: 32px;">
-            <div style="display: inline-flex; background: rgba(236, 72, 153, 0.1); padding: 16px; border-radius: 20px; margin-bottom: 20px;">
-                <i data-lucide="user-plus" style="color: var(--secondary); width: 32px; height: 32px;"></i>
+<div class="flex-center" style="min-height: calc(100vh - 150px); padding: 40px 0;">
+    <div class="card card-glow" style="width: 100%; max-width: 520px; padding: 48px;">
+        <div class="text-center" style="margin-bottom: 40px;">
+            <div class="icon-box icon-box-pink" style="margin: 0 auto 20px; width: 56px; height: 56px;">
+                <i data-lucide="user-plus" style="width: 28px; height: 28px;"></i>
             </div>
-            <h2 style="font-size: 1.75rem; font-weight: 700;">Join Online SMS</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Experience secure and global messaging</p>
+            <h2 class="page-title" style="font-size: 1.8rem; margin-bottom: 8px;">Network Registration</h2>
+            <p class="text-muted">Generate your credentials for the secure messaging grid.</p>
         </div>
 
         <form asp-action="Register" method="post">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="grid-2">
                 <div class="form-group">
-                    <label class="form-label">Username</label>
-                    <input name="Username" class="form-input" placeholder="Desired username" required />
+                    <label class="form-label">Identifier (Username)</label>
+                    <div class="input-icon-wrap">
+                        <i data-lucide="at-sign" class="icon"></i>
+                        <input name="Username" class="form-input" placeholder="e.g. nova99" required />
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input name="Email" type="email" class="form-input" placeholder="mail@example.com" required />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Mobile Number</label>
-                <input name="Mobile" class="form-input" placeholder="e.g. 03001234567" required />
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input name="Password" type="password" class="form-input" placeholder="••••••••" required />
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Confirm</label>
-                    <input name="ConfirmPassword" type="password" class="form-input" placeholder="••••••••" required />
+                    <label class="form-label">Communication Node (Email)</label>
+                    <div class="input-icon-wrap">
+                        <i data-lucide="mail" class="icon"></i>
+                        <input name="Email" type="email" class="form-input" placeholder="node@sector.net" required />
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Verification Code (Demo: 1234)</label>
-                <input name="VerificationCode" class="form-input" placeholder="Enter code" required />
+                <label class="form-label">Mobile Terminal Number</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="smartphone" class="icon"></i>
+                    <input name="Mobile" class="form-input" placeholder="Required for routing. e.g. 03001234567" required />
+                </div>
             </div>
 
-            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-                Create Account <i data-lucide="rocket" style="width: 18px;"></i>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label class="form-label">Passphrase</label>
+                    <div class="input-icon-wrap">
+                        <i data-lucide="key" class="icon"></i>
+                        <input name="Password" type="password" class="form-input" placeholder="••••••••" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Verify Passphrase</label>
+                    <div class="input-icon-wrap">
+                        <i data-lucide="key" class="icon"></i>
+                        <input name="ConfirmPassword" type="password" class="form-input" placeholder="••••••••" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 32px;">
+                <label class="form-label">Security Clearance Code</label>
+                <div class="input-icon-wrap">
+                    <i data-lucide="shield" class="icon"></i>
+                    <input name="VerificationCode" class="form-input" placeholder="Demo clearance: 1234" required />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg">
+                Authorize & Connect <i data-lucide="zap" style="width: 18px;"></i>
             </button>
         </form>
 
-        <div style="text-align: center; margin-top: 32px; border-top: 1px solid var(--glass-border); padding-top: 24px;">
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Already have an account? 
-                <a asp-action="Login" style="color: var(--primary); text-decoration: none; font-weight: 600;">Sign in here</a>
+        <div class="text-center mt-lg" style="border-top: 1px solid var(--border); padding-top: 24px;">
+            <p class="text-muted" style="font-size: 0.9rem;">Credentials already active? 
+                <a asp-action="Login" style="color: var(--pink); text-decoration: none; font-weight: 600; margin-left: 4px;">Initiate Session</a>
             </p>
         </div>
     </div>
