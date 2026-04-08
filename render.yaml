@@ -2,13 +2,9 @@ services:
   - type: web
     name: sms-project-site
     runtime: docker
-    plan: free # Can be changed to a paid plan if needed
+    plan: free
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ASPNETCORE_URLS
         value: http://*:80
-    disk:
-      name: sms-data
-      mountPath: /var/data
-      sizeGB: 1

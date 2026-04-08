@@ -23,14 +23,6 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-// Ensure database directory exists (for persistent storage)
-var dbPath = builder.Configuration.GetConnectionString("DefaultConnection").Split('=')[1];
-var dbDir = Path.GetDirectoryName(dbPath);
-if (!string.IsNullOrEmpty(dbDir) && !Directory.Exists(dbDir))
-{
-    Directory.CreateDirectory(dbDir);
-}
-
 // Ensure database is created
 using (var scope = app.Services.CreateScope())
 {
