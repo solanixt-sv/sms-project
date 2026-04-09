@@ -32,6 +32,14 @@ namespace SmsProject.Controllers
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue) return RedirectToAction("Login", "Account");
 
+            // Prevent duplicate contact numbers for the same user
+            var exists = await _db.Contacts.AnyAsync(c => c.UserId == userId.Value && c.MobileNumber == contact.MobileNumber);
+            if (exists)
+            {
+                TempData["Error"] = "Contact with this mobile number already exists.";
+                return RedirectToAction("Contacts");
+            }
+
             contact.UserId = userId.Value;
             _db.Contacts.Add(contact);
             await _db.SaveChangesAsync();
