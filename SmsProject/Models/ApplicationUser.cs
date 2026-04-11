@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmsProject.Models
 {
@@ -27,7 +28,7 @@ namespace SmsProject.Models
         // Personal Details
         public string? FullName { get; set; }
         public string? Gender { get; set; }
-        public DateTime? DOB { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string? Address { get; set; }
         public string? MaritalStatus { get; set; }
         public string? Hobbies { get; set; }
@@ -37,9 +38,13 @@ namespace SmsProject.Models
         public string? School { get; set; }
         public string? College { get; set; }
         public string? WorkStatus { get; set; }
-        public string? Organization { get; set; }
-        public string? Designation { get; set; }
+        public string? CompanyName { get; set; }
+        public string? JobTitle { get; set; }
 
+        public bool IsPremium { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        [NotMapped]
+        public string Mobile => MobileNumber;
     }
 }

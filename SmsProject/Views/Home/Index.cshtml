@@ -10,38 +10,38 @@
 
 <div class="grid-3">
     <!-- Send SMS Card -->
-    <div class="card card-glow" onclick="location.href='@Url.Action("Index", "Sms")'" style="cursor: pointer;">
+    <div class="card card-glow" onclick="location.href='@Url.Action("Index", "Sms")'" style="cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <div class="flex-center icon-box icon-box-indigo" style="margin-bottom: 24px; width: 64px; height: 64px;">
             <i data-lucide="send"></i>
         </div>
-        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Secure SMS</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.6;">Compose and broadcast encrypted messages to your global network instantly.</p>
-        <div style="display: flex; align-items: center; color: var(--indigo-light); font-weight: 600; font-size: 0.9rem;">
-            Open Composer <i data-lucide="arrow-right" style="width: 16px; margin-left: 6px;"></i>
+        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Quick Message</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6;">Send SMS to your friends or contacts instantly.</p>
+        <div style="margin-top: auto; width: 100%;">
+            <a href="@Url.Action("Index", "Sms")" class="btn btn-primary" style="width: 100%; justify-content: center; background: #5568fe;">Go to Inbox</a>
         </div>
     </div>
 
     <!-- Social Circle Card -->
-    <div class="card" onclick="location.href='@Url.Action("Friends", "Social")'" style="cursor: pointer;">
+    <div class="card" onclick="location.href='@Url.Action("Friends", "Social")'" style="cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <div class="flex-center icon-box icon-box-pink" style="margin-bottom: 24px; width: 64px; height: 64px;">
             <i data-lucide="users"></i>
         </div>
         <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Social Circle</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.6;">Expand your network, manage incoming requests, and connect with trusted peers.</p>
-        <div style="display: flex; align-items: center; color: var(--pink); font-weight: 600; font-size: 0.9rem;">
-            Manage Friends <i data-lucide="arrow-right" style="width: 16px; margin-left: 6px;"></i>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6;">Manage your friends and connections.</p>
+        <div style="margin-top: auto; width: 100%;">
+            <a href="@Url.Action("Friends", "Social")" class="btn btn-primary" style="width: 100%; justify-content: center; background: #5568fe;">View Friends</a>
         </div>
     </div>
 
     <!-- Premium Services Card -->
-    <div class="card" onclick="location.href='@Url.Action("Index", "Service")'" style="cursor: pointer;">
+    <div class="card" onclick="location.href='@Url.Action("Index", "Service")'" style="cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <div class="flex-center icon-box icon-box-amber" style="margin-bottom: 24px; width: 64px; height: 64px;">
-            <i data-lucide="zap"></i>
+            <i data-lucide="package"></i>
         </div>
-        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Premium Tier</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 28px; font-size: 0.95rem; line-height: 1.6;">Unlock unlimited messaging, priority delivery, and exclusive platform features.</p>
-        <div style="display: flex; align-items: center; color: var(--amber); font-weight: 600; font-size: 0.9rem;">
-            View Plans <i data-lucide="arrow-right" style="width: 16px; margin-left: 6px;"></i>
+        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text);">Service Packages</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6;">Activate new services and messaging plans.</p>
+        <div style="margin-top: auto; width: 100%;">
+            <a href="@Url.Action("Index", "Service")" class="btn btn-primary" style="width: 100%; justify-content: center; background: #5568fe;">Explore Services</a>
         </div>
     </div>
 </div>

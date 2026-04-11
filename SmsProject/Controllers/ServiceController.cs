@@ -20,8 +20,8 @@ namespace SmsProject.Controllers
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue) return RedirectToAction("Login", "Account");
 
-            ViewBag.Services = await _db.Friendships.Where(f => f.User1Id == userId.Value).ToListAsync(); // Simulated Subscriptions
-            return View();
+            var user = await _db.Users.FindAsync(userId.Value);
+            return View(user);
         }
 
         [HttpPost]

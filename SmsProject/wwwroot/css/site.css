@@ -128,7 +128,7 @@ nav {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 24px;
 }
 
 .nav-links a {
@@ -216,12 +216,15 @@ nav {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 28px;
+    padding: 32px;
     box-shadow: var(--shadow-card);
     transition: border-color 0.3s ease, transform 0.3s ease;
     position: relative;
     overflow: hidden;
-    margin-bottom: 24px; /* added spacing */
+    margin-bottom: 24px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 .card:hover { border-color: var(--border-hover); }
@@ -467,7 +470,7 @@ textarea.form-input { resize: none; min-height: 140px; }
 .text-muted    { color: var(--text-secondary); }
 .text-center   { text-align: center; }
 .grid-2        { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.grid-3        { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.grid-3        { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
 
 /* =========================================
    SCROLLBAR

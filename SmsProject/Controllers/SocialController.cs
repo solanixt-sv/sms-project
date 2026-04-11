@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmsProject.Data;
 using SmsProject.Models;
+using System.Dynamic;
 
 namespace SmsProject.Controllers
 {
@@ -54,15 +55,31 @@ namespace SmsProject.Controllers
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue) return RedirectToAction("Login", "Account");
 
-            ViewBag.Requests = await _db.Friendships
-                .Where(f => f.User2Id == userId.Value && f.Status == "Pending")
-                .ToListAsync();
-
-            ViewBag.MyFriends = await _db.Friendships
+            var friendships = await _db.Friendships
                 .Where(f => (f.User1Id == userId.Value || f.User2Id == userId.Value) && f.Status == "Accepted")
                 .ToListAsync();
 
-            return View();
+            var friends = new List<ApplicationUser>();
+            foreach (var f in friendships)
+            {
+                var friendId = f.User1Id == userId.Value ? f.User2Id : f.User1Id;
+                var user = await _db.Users.FindAsync(friendId);
+                if (user != null) friends.Add(user);
+            }
+
+            var pending = await _db.Friendships
+                .Where(f => f.User2Id == userId.Value && f.Status == "Pending")
+                .Select(f => new {
+                    f.Id,
+                    Requester = _db.Users.FirstOrDefault(u => u.Id == f.User1Id)
+                })
+                .ToListAsync();
+
+            dynamic model = new ExpandoObject();
+            model.Friends = friends;
+            model.PendingRequests = pending;
+
+            return View(model);
         }
 
         [HttpPost]

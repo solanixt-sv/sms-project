@@ -20,14 +20,14 @@ namespace SmsProject.Controllers
         public IActionResult Register() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Register(ApplicationUser user, string confirmPassword, string verificationCode, string actualCode)
+        public async Task<IActionResult> Register(ApplicationUser user, string confirmPassword, string verificationCode)
         {
             if (user.Password != confirmPassword) {
                 ModelState.AddModelError("Password", "Passwords do not match!");
                 return View(user);
             }
-            if (verificationCode != actualCode) {
-                ModelState.AddModelError("ActualCode", "Invalid verification code!");
+            if (verificationCode != "1234") {
+                ModelState.AddModelError("ActualCode", "Invalid verification code! (Use 1234)");
                 return View(user);
             }
 
@@ -93,7 +93,7 @@ namespace SmsProject.Controllers
             if (user != null) {
                 user.FullName = model.FullName;
                 user.Gender = model.Gender;
-                user.DOB = model.DOB;
+                user.DateOfBirth = model.DateOfBirth;
                 user.Address = model.Address;
                 user.MaritalStatus = model.MaritalStatus;
                 user.Hobbies = model.Hobbies;
@@ -114,9 +114,29 @@ namespace SmsProject.Controllers
                 user.School = model.School;
                 user.College = model.College;
                 user.WorkStatus = model.WorkStatus;
-                user.Organization = model.Organization;
-                user.Designation = model.Designation;
+                user.CompanyName = model.CompanyName;
+                user.JobTitle = model.JobTitle;
                 await _db.SaveChangesAsync();
+            }
+            return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(ApplicationUser model)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (!userId.HasValue) return RedirectToAction("Login");
+
+            var user = await _db.Users.FindAsync(userId.Value);
+            if (user != null) {
+                user.FullName = model.FullName;
+                user.DateOfBirth = model.DateOfBirth;
+                user.Address = model.Address;
+                user.CompanyName = model.CompanyName;
+                user.JobTitle = model.JobTitle;
+                
+                await _db.SaveChangesAsync();
+                TempData["ProfileMsg"] = "Profile updated successfully!";
             }
             return RedirectToAction("Profile");
         }

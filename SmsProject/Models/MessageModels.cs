@@ -43,6 +43,11 @@ namespace SmsProject.Models
         [StringLength(10)]
         public string MobileNumber { get; set; } = string.Empty;
 
+        [NotMapped]
+        public string Name => $"{FirstName} {LastName}".Trim();
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         [ForeignKey("UserId")]
         public virtual ApplicationUser? User { get; set; }
     }
